@@ -46,7 +46,7 @@ def test_metadata():
         assert idps.keys()
         idpsso = mds.single_sign_on_service(umu_idp)
         assert len(idpsso) == 1
-        assert destinations(idpsso) == [
+        assert list(destinations(idpsso)) == [
             'https://idp.umu.se/saml2/idp/SSOService.php']
 
         _name = name(mds[umu_idp])

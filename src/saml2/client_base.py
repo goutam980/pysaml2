@@ -212,7 +212,7 @@ class Base(Entity):
             # verify that it's in the metadata
             srvs = self.metadata.single_sign_on_service(entityid, binding)
             if srvs:
-                return destinations(srvs)[0]
+                return next(destinations(srvs), None)
             else:
                 logger.info("_sso_location: %s, %s", entityid, binding)
                 raise IdpUnspecified("No IdP to send to given the premises")
@@ -224,9 +224,8 @@ class Base(Entity):
             raise IdpUnspecified("Too many IdPs to choose from: %s" % eids)
 
         try:
-            srvs = self.metadata.single_sign_on_service(list(eids.keys())[0],
-                                                        binding)
-            return destinations(srvs)[0]
+            srvs = self.metadata.single_sign_on_service(list(eids.keys())[0], binding)
+            return next(destinations(srvs), None)
         except IndexError:
             raise IdpUnspecified("No IdP to send to given the premises")
 

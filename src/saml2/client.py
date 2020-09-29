@@ -209,7 +209,7 @@ class Saml2Client(Base):
                     logger.debug("No SLO '%s' service", binding)
                     continue
 
-                destination = destinations(srvs)[0]
+                destination = next(destinations(srvs), None)
                 logger.info("destination to provider: %s", destination)
                 try:
                     session_info = self.users.get_info_from(name_id,
@@ -461,7 +461,7 @@ class Saml2Client(Base):
             if srvs is []:
                 raise SAMLError("No attribute service support at entity")
 
-            destination = destinations(srvs)[0]
+            destination = next(destinations(srvs), None)
 
         if binding == BINDING_SOAP:
             return self._use_soap(destination, "attribute_query",

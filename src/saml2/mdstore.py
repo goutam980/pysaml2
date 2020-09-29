@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import sys
+from itertools import chain
 
 from hashlib import sha1
 from os.path import isfile
@@ -150,16 +151,29 @@ def metadata_modules():
 
 
 def response_destinations(srvs):
-    _res = []
-    for s in srvs:
-        if "response_location" in s:
-            _res.append(s["response_location"])
-        else:
-            _res.append(s["location"])
-    return _res
+    values = (
+        s["response_location"]
+        for s in srvs
+        if "response_location" in s
+    )
+    return values
+
 
 def destinations(srvs):
-    return [s["location"] for s in srvs]
+    values = (
+        s["location"]
+        for s in srvs
+        if "location" in s
+    )
+    return values
+
+
+def all_destinations(srvs):
+    values = chain(
+        response_destinations(srvs),
+        destinations(srvs),
+    )
+    return values
 
 
 def attribute_requirement(entity, index=None):

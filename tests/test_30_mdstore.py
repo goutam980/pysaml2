@@ -177,8 +177,9 @@ def test_swami_1():
     assert idps.keys()
     idpsso = mds.single_sign_on_service(UMU_IDP)
     assert len(idpsso) == 1
-    assert destinations(idpsso) == [
-        'https://idp.umu.se/saml2/idp/SSOService.php']
+    assert list(destinations(idpsso)) == [
+        'https://idp.umu.se/saml2/idp/SSOService.php'
+    ]
 
     _name = name(mds[UMU_IDP])
     assert _name == u'Umeå University (SAML2)'
@@ -219,8 +220,9 @@ def test_incommon_1():
     idpsso = mds.single_sign_on_service('urn:mace:incommon:alaska.edu')
     assert len(idpsso) == 1
     print(idpsso)
-    assert destinations(idpsso) == [
-        'https://idp.alaska.edu/idp/profile/SAML2/Redirect/SSO']
+    assert list(destinations(idpsso)) == [
+        'https://idp.alaska.edu/idp/profile/SAML2/Redirect/SSO'
+    ]
 
     sps = mds.with_descriptor("spsso")
 
@@ -279,8 +281,9 @@ def test_switch_1():
         'https://aai-demo-idp.switch.ch/idp/shibboleth')
     assert len(idpsso) == 1
     print(idpsso)
-    assert destinations(idpsso) == [
-        'https://aai-demo-idp.switch.ch/idp/profile/SAML2/Redirect/SSO']
+    assert list(destinations(idpsso)) == [
+        'https://aai-demo-idp.switch.ch/idp/profile/SAML2/Redirect/SSO'
+    ]
     assert len(idps) > 30
     aas = mds.with_descriptor("attribute_authority")
     print(aas.keys())
